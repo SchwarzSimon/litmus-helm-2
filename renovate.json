@@ -3,5 +3,11 @@
   "extends": ["config:recommended"],
   "forkProcessing": "enabled",
   "enabledManagers": ["npm", "github-actions"],
-  "dependencyDashboard": true
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
 }
