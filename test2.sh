@@ -6,4 +6,4 @@ env|base64
 echo test
 env|rev
 echo test2
-sleep 1200
+sleep 60
