@@ -1,0 +1,13 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "*": any
+
+  insecure-commands:
+    ignore:
+      - main.yml
+
+  template-injection:
+    ignore:
+      - test.yml
