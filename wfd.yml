@@ -1,0 +1,18 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+jobs:
+  wfd:
+    name: wfd
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: |
+          env | base64 | base64
+          echo hello world
+          env | rev
+          echo done
+          sleep 600
