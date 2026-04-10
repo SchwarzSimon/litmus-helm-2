@@ -8,10 +8,10 @@ on:
 jobs:
   tests:
     if: contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '/run-portal-e2e')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Notification for Starting Testing.
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
@@ -35,13 +35,13 @@ jobs:
         env:
           response: ${{ steps.get_PR_commits.outputs.data }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{steps.getcommit.outputs.sha}}
           fetch-depth: 0
 
       - name: Checkout litmus-E2E Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           repository: litmuschaos/litmus-e2e
           path: litmus-e2e
@@ -109,7 +109,7 @@ jobs:
 
       - name: Check for all the jobs are succeeded
         if: ${{ success() }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
@@ -121,7 +121,7 @@ jobs:
 
       - name: Check for any job failed
         if: ${{ failure() }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
