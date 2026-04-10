@@ -1,11 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended",     
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)"
+  ],
   "forkProcessing": "enabled",
   "enabledManagers": ["npm", "github-actions", "custom.regex"],
   "prConcurrentLimit": 30,
   "prHourlyLimit": 30,
   "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "pinDigests": true,
+      "addLabels": ["github-actions"],
+      "groupName": "github actions"
+    },
     {
       "matchManagers": ["npm"],
       "groupName": "npm dependencies",
@@ -17,10 +27,6 @@
         "executionMode": "update",
         "fileFilters": [".github/workflows/test.yml", "openapi.json"]
       }
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "groupName": "github actions"
     }
   ],
   "customManagers": [
