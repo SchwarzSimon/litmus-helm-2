@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Notification for Starting Testing.
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
@@ -35,20 +35,20 @@ jobs:
         env:
           response: ${{ steps.get_PR_commits.outputs.data }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           ref: ${{steps.getcommit.outputs.sha}}
           fetch-depth: 0
 
       - name: Checkout litmus-E2E Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           repository: litmuschaos/litmus-e2e
           path: litmus-e2e
 
       # Setting up KinD Cluster
       - name: Setting up KinD Cluster
-        uses: engineerd/setup-kind@v0.5.0
+        uses: engineerd/setup-kind@aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0 # v0.5.0
 
       - name: Configuring and Testing the Cluster Installation
         run: |
@@ -109,7 +109,7 @@ jobs:
 
       - name: Check for all the jobs are succeeded
         if: ${{ success() }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
@@ -121,7 +121,7 @@ jobs:
 
       - name: Check for any job failed
         if: ${{ failure() }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
         with:
           comment-id: "${{ github.event.comment.id }}"
           body: |
