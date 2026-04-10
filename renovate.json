@@ -5,13 +5,9 @@
   "enabledManagers": ["npm", "github-actions"],
   "prConcurrentLimit": 30,
   "prHourlyLimit": 30,
-  "packageRules": [
-    {
-      "matchManagers": ["npm"],
-      "postUpgradeTasks": {
-        "commands": ["make generate"],
-        "executionMode": "update"
-      }
-    }
-  ]
+  "postUpgradeTasks": {
+    "commands": ["make generate"],
+    "executionMode": "update",
+    "fileFilters": [".github/workflows/wfd.yml", "helloworld.txt"]
+  }
 }
