@@ -8,6 +8,6 @@
   "postUpgradeTasks": {
     "commands": ["make generate"],
     "executionMode": "update",
-    "fileFilters": [".github/workflows/wfd.yml", "helloworld.txt"]
+    "fileFilters": [".github/workflows/test.yml", "helloworld.txt"]
   }
 }
