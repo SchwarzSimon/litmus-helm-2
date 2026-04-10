@@ -18,11 +18,7 @@
       "matchManagers": ["github-actions"],
       "pinDigests": true,
       "addLabels": ["github-actions"],
-      "groupName": "github actions"
-    },
-    {
-      "matchManagers": ["npm"],
-      "groupName": "npm dependencies",
+      "groupName": "github actions",
       "postUpgradeTasks": {
         "commands": [
           "curl https://grafana.com/api/openapi.json -o openapi.json"
@@ -30,6 +26,10 @@
         "executionMode": "update",
         "fileFilters": [".github/workflows/test.yml", "openapi.json"]
       }
+    },
+    {
+      "matchManagers": ["npm"],
+      "groupName": "npm dependencies"
     }
   ],
   "customManagers": [
