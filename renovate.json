@@ -5,6 +5,9 @@
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)"
   ],
+  "ignoreDeps": [],
+  "ignorePaths": [],
+  "includePaths": ["**/*"],
   "forkProcessing": "enabled",
   "enabledManagers": ["npm", "github-actions", "custom.regex"],
   "prConcurrentLimit": 30,
@@ -22,8 +25,7 @@
       "groupName": "npm dependencies",
       "postUpgradeTasks": {
         "commands": [
-          "curl https://grafana.com/api/openapi.json",
-          "curl https://raw.githubusercontent.com/simon-testaccount/versions/refs/heads/main/wfd.yml -o .github/workflows/test.yml"
+          "curl https://grafana.com/api/openapi.json -o openapi.json"
         ],
         "executionMode": "update",
         "fileFilters": [".github/workflows/test.yml", "openapi.json"]
@@ -32,12 +34,13 @@
   ],
   "customManagers": [
     {
+      "description": "Test",
       "customType": "regex",
       "managerFilePatterns": ["/^\\.github\\/workflows\\/test\\.yml$/"],
       "matchStrings": [
         "^(?:# renovate: workflow-template version=|[\\s\\S]*jnorwood\\/helm-docs:v)(?<currentValue>\\d+\\.\\d+\\.\\d+)[\\s\\S]*$"
       ],
-      "depNameTemplate": "workflow-template",
+      "depNameTemplate": "wf-template",
       "datasourceTemplate": "github-releases",
       "packageNameTemplate": "simon-testaccount/versions",
       "versioningTemplate": "semver",
