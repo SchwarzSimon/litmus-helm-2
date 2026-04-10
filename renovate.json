@@ -9,6 +9,7 @@
   "enabledManagers": ["npm", "github-actions", "custom.regex"],
   "prConcurrentLimit": 30,
   "prHourlyLimit": 30,
+  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{configDescription}}}{{{controls}}}{{{footer}}}",
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
